@@ -12,4 +12,8 @@ public class ActionButton : MonoBehaviour
         actionLabel.SetText(newText);
     }
 
+    public void OnClick(){
+        GetComponentInParent<DialogueNode>().InitializeConnection(this);
+    }
+
 }

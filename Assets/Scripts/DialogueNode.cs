@@ -27,7 +27,7 @@ public class DialogueNode : MonoBehaviour
         drawNode();
     }
 
-    void drawNode(){
+    public void drawNode(){
         ClearActionButtons();
         headerTxt.SetText(dialogueHeader);
         DrawActionButtons();
@@ -50,6 +50,20 @@ public class DialogueNode : MonoBehaviour
             newButton.dialogueAction = dialogueAction;
             newButton.SetText((i + 1).ToString());
         }
+    }
+
+    public void SelectNode(){
+        InspectorController ic = GameObject.FindWithTag("IC").GetComponent<InspectorController>();
+        ConnectionController cc = GameObject.FindWithTag("CC").GetComponent<ConnectionController>();
+        if(!cc.TryFinishConnection(this)){
+            ic.SelectNode(this);
+        } 
+        
+    }
+
+    public void InitializeConnection(ActionButton actionButton){
+        ConnectionController cc = GameObject.FindWithTag("CC").GetComponent<ConnectionController>();
+        cc.StartConnection(actionButton);
     }
 
    
