@@ -454,6 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 7534284238231155604, guid: 63a05a420fb97b345bf9bb32b8c5d239, type: 3}
   nodeGroup: {fileID: 4550513558728750455}
+  id: 0
 --- !u!1 &7088690929683350039
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,6 +534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 0}
   nodeGroup: {fileID: 0}
+  id: 0
 --- !u!222 &6085426901260027761
 CanvasRenderer:
   m_ObjectHideFlags: 0

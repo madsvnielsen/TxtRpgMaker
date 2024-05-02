@@ -7,6 +7,9 @@ public class InspectorController : MonoBehaviour
 {
 
     public GameObject editContentContainer;
+    public Transform editActionsTransform;
+
+    public EditAction editActionPrefab;
 
     public DialogueNode selectedNode = null;
 
@@ -31,6 +34,27 @@ public class InspectorController : MonoBehaviour
         headerText.SetText(dialogueNode.dialogueHeader);
         titleInput.text = dialogueNode.dialogueHeader;
         textInput.text = dialogueNode.dialogueText;
+        DrawEditActions();
+    }
+
+    private void DrawEditActions(){
+        foreach(Transform child in editActionsTransform){
+            Destroy(child.gameObject);
+        }
+        int index = 1;
+        foreach(DialogueAction dialogueAction in selectedNode.dialogueActions){
+            EditAction newEditAction = Instantiate(editActionPrefab);
+            newEditAction.transform.SetParent(editActionsTransform);
+            newEditAction.dialogueAction = dialogueAction;
+            newEditAction.transform.localScale = new Vector3(1,1,1);
+            newEditAction.id = index++.ToString();
+        }
+
+    }
+
+    public void AddAction(){
+        selectedNode.AddAction(new DialogueAction());
+        DrawEditActions();
     }
 
     public void UpdateTitle(string newValue){
@@ -41,5 +65,10 @@ public class InspectorController : MonoBehaviour
 
     public void UpdateText(string newValue){
         selectedNode.dialogueText = newValue;
+    }
+
+    public void DeleteActionFromNode(DialogueAction action){
+        selectedNode.dialogueActions.Remove(action);
+        selectedNode.drawNode();
     }
 }

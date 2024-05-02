@@ -95,7 +95,7 @@ MonoBehaviour:
   dialogueText: 
   isStartNode: 0
   actionButtonsTransform: {fileID: 2353150684092523498}
-  actionButtonPrefab: {fileID: 0}
+  actionButtonPrefab: {fileID: 4549141921922729618, guid: 53d53006616773448b3727f3850b144a, type: 3}
   headerTxt: {fileID: 6416225001372138671}
 --- !u!114 &-6219213371001769931
 MonoBehaviour:

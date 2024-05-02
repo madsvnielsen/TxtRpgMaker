@@ -2,12 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
+using System;
+
+[System.Serializable]
+public class DialogueNodeData{
+    public string dialogueHeader;
+    public string dialogueText;
+    public bool isStartNode;
+    public string id;
+
+    public string serializedDialogueActions;
+}
+
 public class DialogueNode : MonoBehaviour
 {
 
     public string dialogueHeader = "Untitled";
     public string dialogueText = "";
     public List<DialogueAction> dialogueActions;
+
+    public string id = "0";
 
     public bool isStartNode = false;
 
@@ -16,6 +31,8 @@ public class DialogueNode : MonoBehaviour
     public ActionButton actionButtonPrefab;
 
     public TMP_Text headerTxt;
+
+
     
     // Start is called before the first frame update
     void Start()
@@ -33,6 +50,11 @@ public class DialogueNode : MonoBehaviour
         DrawActionButtons();
        
 
+    }
+
+    public void AddAction(DialogueAction newAction){
+        dialogueActions.Add(newAction);
+        drawNode();
     }
 
     private void ClearActionButtons(){
@@ -64,6 +86,28 @@ public class DialogueNode : MonoBehaviour
     public void InitializeConnection(ActionButton actionButton){
         ConnectionController cc = GameObject.FindWithTag("CC").GetComponent<ConnectionController>();
         cc.StartConnection(actionButton);
+    }
+
+    public string SerializeNodeData()
+    {
+       
+        DialogueNodeData data = new DialogueNodeData
+        {
+            dialogueHeader = dialogueHeader,
+            dialogueText = dialogueText,
+            isStartNode = isStartNode,
+            id = id,
+            serializedDialogueActions = SerializedDialogueActions()
+        };
+        return JsonUtility.ToJson(data);
+    }
+
+    private string SerializedDialogueActions(){
+        string[] serializedActions = new string[dialogueActions.Count];
+        for(int i = 0; i < dialogueActions.Count; i++){
+            serializedActions[i] = dialogueActions[i].SerializeDialogueAction();
+        }
+        return "[" + String.Join(",", serializedActions) + "]";
     }
 
    
